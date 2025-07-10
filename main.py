@@ -1,16 +1,32 @@
 import requests 
 import traceback
+import os
 
 def subdomainfinder():
 	file = getwords()
+	if not file:
+		return
+	
 	url = input("url(without https): ")
+	if not url:
+		print("Invalid URL Input.")
+		return
+	
 	for i in file:
 		request("https://"+str(i) +"."+url)
+
 def directoryfinder():
 	file = getwords()
+	
 	url = input("url(without https): ")
+	if not url:
+		print("Invaild URL Input.")
+		return
+	
 	for i in file:
 		request("https://"+url+"/"+str(i))
+
+
 def request(url):
 	session = requests.Session()
 	try:
@@ -19,14 +35,20 @@ def request(url):
 			print("----------> "+url + " is found!")
 	except Exception as e:
 		print(url + " " +type(e).__name__)
+
+
 def getwords():
 	filepath = input("wordlist file path: ")
+	if not os.path.isfile(filepath):
+		print("File not found or path is invalid.")
+		return[]
 	f = []
 	with open(filepath,"r") as f_obj:
 		for line in f_obj:
 			f.append(line.strip())
 	return f
 	
+
 if __name__ == "__main__":
 	while True:
 		print("CustomCrawler\nType --help for help.\n\n")
@@ -38,4 +60,5 @@ if __name__ == "__main__":
 		elif userInput == "-d":
 				directoryfinder()
 		elif userInput == "exit":
+			print("Exiting..")
 			exit()
