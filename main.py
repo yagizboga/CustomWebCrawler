@@ -4,7 +4,7 @@ import os
 
 def subdomainfinder():
 	file = getwords()
-	if not file:
+	if file is None:
 		return
 	
 	url = input("url(without https): ")
@@ -17,10 +17,12 @@ def subdomainfinder():
 
 def directoryfinder():
 	file = getwords()
+	if file is None:
+		return
 	
-	url = input("url(without https): ")
+	url = input("url(without https): ").strip()
 	if not url:
-		print("Invaild URL Input.")
+		print("Invalid URL Input.")
 		return
 	
 	for i in file:
@@ -41,7 +43,7 @@ def getwords():
 	filepath = input("wordlist file path: ")
 	if not os.path.isfile(filepath):
 		print("File not found or path is invalid.")
-		return[]
+		return None
 	f = []
 	with open(filepath,"r") as f_obj:
 		for line in f_obj:
@@ -51,10 +53,10 @@ def getwords():
 
 if __name__ == "__main__":
 	while True:
-		print("CustomCrawler\nType --help for help.\n\n")
+		print("\nCustomCrawler\nType --help for help.\n")
 		userInput = input()
 		if userInput == "--help":
-			print("-s for subdomain finder\n-d for directory finder\n\n")
+			print("-s for subdomain finder\n-d for directory finder\n")
 		elif userInput == "-s":
 				subdomainfinder()
 		elif userInput == "-d":
